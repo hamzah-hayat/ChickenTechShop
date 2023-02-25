@@ -1,11 +1,11 @@
 {
-    "id": "mymodid",
-    "name": "My Starsector Mod",
-    "author": "My Name",
+    "id": "chickentechshop",
+    "name": "Chicken's Tech Shop",
+    "author": "Chickenboy",
     "utility": true,
     "version": "1.0.0",
-    "description": "This is my mod that mods the game.",
-    "gameVersion": "0.95a-RC15",
+    "description": "Chicken Tech Shop is a mod for Starsector, that creates a special marketplace that sells loot items.",
+    "gameVersion": "0.95.1a-RC6",
     "modPlugin": "mymodid.MymodMod",
     "jars": [
         "mymodid.jar"
