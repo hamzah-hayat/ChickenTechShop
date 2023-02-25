@@ -1,0 +1,13 @@
+{
+    "id": "mymodid",
+    "name": "My Starsector Mod",
+    "author": "My Name",
+    "utility": true,
+    "version": "1.0.0",
+    "description": "This is my mod that mods the game.",
+    "gameVersion": "0.95a-RC15",
+    "modPlugin": "mymodid.MymodMod",
+    "jars": [
+        "mymodid.jar"
+    ]
+}
