@@ -3,7 +3,7 @@
     "name": "Chicken's Tech Shop",
     "author": "Chickenboy",
     "utility": false,
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Chicken Tech Shop is a mod for Starsector, that creates a special marketplace that sells loot items.",
     "gameVersion": "0.95.1a-RC6",
     "modPlugin": "chickentechshop.ChickenTechShop",

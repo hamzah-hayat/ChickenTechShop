@@ -4,7 +4,6 @@
 
     // List of extensions which should be recommended for users of this workspace.
     "recommendations": [
-        "esbenp.prettier-vscode",
         "naco-siren.gradle-language",
         "vscjava.vscode-gradle",
         "vscjava.vscode-java-pack"
