@@ -47,4 +47,4 @@ jobs:
                   draft: false
                   prerelease: false
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  artifacts: "stelnet*.zip"
+                  artifacts: "chickentechshop*.zip"
