@@ -1,0 +1,2 @@
+id,name,faction,desc,script,icon,order
+chicken_market,Chicken's Tech,independent,"Chicken has a selection of rare and valuable tech items, blueprints and more stashed away for purchase only by those he deems worthy.",chickentechshop.campaign.submarkets.TechMarket,graphics/factions/storage.png,300
