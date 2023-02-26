@@ -8,8 +8,6 @@ import com.fs.starfarer.api.campaign.PlayerMarketTransaction;
 import com.fs.starfarer.api.campaign.RepLevel;
 import com.fs.starfarer.api.campaign.SpecialItemData;
 import com.fs.starfarer.api.campaign.SpecialItemSpecAPI;
-import com.fs.starfarer.api.campaign.econ.MarketAPI;
-import com.fs.starfarer.api.campaign.econ.SubmarketAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.submarkets.BaseSubmarketPlugin;
@@ -17,19 +15,13 @@ import com.fs.starfarer.api.loading.FighterWingSpecAPI;
 import com.fs.starfarer.api.util.Highlights;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.apache.log4j.Logger;
 
 public class TechMarket extends BaseSubmarketPlugin {
 
     public static RepLevel MIN_STANDING = RepLevel.VENGEFUL;
-
     public static Logger log = Global.getLogger(TechMarket.class);
-
-    static Exception failedLoad = null;
-    protected static Set<SubmarketAPI> cachedSubmarkets = null;
 
     @Override
     public void updateCargoPrePlayerInteraction() {
@@ -86,25 +78,8 @@ public class TechMarket extends BaseSubmarketPlugin {
     }
 
     protected void addShips() {
-
         // CargoAPI cargo = getCargo();
         // FleetDataAPI data = cargo.getMothballedShips();
-    }
-
-    // call this on game load
-    public static void clearSubmarketCache() {
-        cachedSubmarkets = null;
-    }
-
-    public static void cacheSubmarketsIfNeeded() {
-        if (cachedSubmarkets == null) {
-            cachedSubmarkets = new HashSet<>();
-            for (MarketAPI market : Global.getSector().getEconomy().getMarketsCopy()) {
-                if (market.hasSubmarket("chicken_market")) {
-                    cachedSubmarkets.add(market.getSubmarket("chicken_market"));
-                }
-            }
-        }
     }
 
     // ==========================================================================
