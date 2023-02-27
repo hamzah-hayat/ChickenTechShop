@@ -1,8 +1,5 @@
 package chickentechshop.campaign.intel.missions.chicken;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.PersonImportance;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
@@ -15,20 +12,12 @@ import com.fs.starfarer.api.impl.campaign.ids.Voices;
 public class ChickenQuestUtils {
 		
 	public static final String PERSON_CHICKEN = "chicken";
-	public static final List<String> TAG_AS_CHICKEN_MISSION = new ArrayList<>(Arrays.asList(new String[]{
-		//"proCom", // meh
-		"sShip", 
-		//"dhi", "dsp", // don't seem to work, maybe do custom versions later?
-		//"tabo",		// requires military, maybe do custom version
-		"seco", "ssat",
-		//"sitm"	// next time maybe?
-	}));
 	
 	public static void createChicken(MarketAPI market) {
 		PersonAPI person = Global.getFactory().createPerson();
 		person.setId(PERSON_CHICKEN);
 		person.setImportance(PersonImportance.HIGH);
-		person.setVoice(Voices.SPACER);	// best I can come up with
+		person.setVoice(Voices.SPACER);
 		person.setFaction(Factions.INDEPENDENT);
 		person.setGender(FullName.Gender.MALE);
 		person.setRankId(Ranks.SPECIAL_AGENT);
@@ -39,11 +28,5 @@ public class ChickenQuestUtils {
 		person.addTag("chicken");
 		Global.getSector().getImportantPeople().addPerson(person);
 		market.addPerson(person);
-	}
-	
-	public static void setupChickenContactMissions() {
-		for (String id : TAG_AS_CHICKEN_MISSION) {
-			Global.getSettings().getMissionSpec(id).getTagsAny().add("chicken");
-		}
 	}
 }
