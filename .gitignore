@@ -17,3 +17,5 @@ package-lock.json
 !.vscode/extensions.json
 # Local copies of mod structure (dev env)
 /mod_info.json
+data/
+graphics/
