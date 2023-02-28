@@ -1,0 +1,6 @@
+Version 0.0.1 - 0.0.5
+
+Features
+    - Inital work on mod stuff, Readme,Changelog, Credits etc
+    - Create basic Tech market and add to Prisim Freeport
+    - Create Chicken intro mission and work on creating contact for him
