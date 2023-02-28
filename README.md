@@ -1,3 +1,44 @@
+# Chicken's Tech Shop
+
+A mod for Starsector that creates a special contact called Chicken, a spacer that specailises in selling tech goodies
+Meeting him will create a submarket at his location that sells items such as AI cores, Colony items and even Blueprints.
+
+## Credits
+
+I basically hacked my way through this using a combination of the following as guides, big thanks to them
+
+- [Starsector Modding forums (Modding Tools & Resources Thread)](https://fractalsoftworks.com/forum/index.php?topic=633.0)
+- [Nexerelin](https://fractalsoftworks.com/forum/index.php?topic=9175.0)
+- [Special Hullmod Upgrades](https://fractalsoftworks.com/forum/index.php?topic=25424.0)
+
+Also Special thanks to the template provided here [Starsector Mod Template by jaghaimo](https://github.com/jaghaimo/starsector-mod)
+The LICENSE_TEMPLATE.MD is for everything provided by said Template (Inital Commit - a417e4043ea1d1e01e76453c43254cd3dbb2b86e)
+While LICENSE.MD is for my work (Everything After)
+Feel free to use whatever you see here if you find it useful
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Starsector mod template
 
 This is a basic Github template to create a working Starsector mod.

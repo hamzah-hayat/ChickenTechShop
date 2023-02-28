@@ -1,5 +1,7 @@
 id,trigger,conditions,script,text,options,notes
-CTS_BarEventChickenStart,AddBarEvents,$market.id == nex_prismFreeport RollProbability 1,"AddBarEvent CTS_MeetChickenIntro_1 ""Approach the spacer"" ""A spacer wearing a grimy hardsuit with a full face mask is sitting in a table area, tinkering with an array of electrical components, he looks up at you as you walk in and motions with his hand."" highlight",,,
+CTS_BarEventChickenStart,AddBarEvents,"$market.id == nex_prismFreeport 
+RollProbability 1 
+!$global.CTS_ChickenIntroComplete","AddBarEvent CTS_MeetChickenIntro_1 ""Approach the spacer"" ""A spacer wearing a grimy hardsuit with a full face mask is sitting in a table area, tinkering with an array of electrical components, he looks up at you as you walk in and motions with his hand."" highlight",,,
 CTS_BarEventChickenIntro_1,DialogOptionSelected,$option == CTS_MeetChickenIntro_1,BeginConversation chicken true true,"You move towards the spacer, who quickly begins to move his tools and components on the table to the side.
 
 ""Sit down."" a raspy voice speaks beneath the heavy hardsuit sitting in front of you. ""I've heard of you Captain, you've been making yourself known to the sector. I have a proposition for you.""
@@ -9,5 +11,6 @@ He pulls a bag from underneath the desk and lifts it onto the table, clattering 
 ""Privacy. Now, where is it? I know it's in here..."" he begins to pull out rusty and dirty eletrical and prefab components out of his bag, tossing them onto the steadily growing pile of junk to his side. He then reaches forward and pulls out a no-descript black box, with a simple clasp on the front.
 
 ""Here, take a look"" he pushes the box towards you and points at the latch.",CTS_MeetChickenIntro_2:Open the box,
-CTS_MeetChickenIntro_2,DialogOptionSelected,$option == CTS_MeetChickenIntro_2,,"AddTextSmall ""You now have access to Chicken's Tech Shop! Check the Trade screen for the new submarket"" good",CTS_MeetChickenIntro_Finish:Add his ID card,
+CTS_MeetChickenIntro_2,DialogOptionSelected,$option == CTS_MeetChickenIntro_2,CTS_CreateSubmarketAndChickenContact,"AddTextSmall ""You now have access to Chicken's Tech Shop! Check the Trade screen for the new submarket"" good
+AddTextSmall ""Added Chicken to your contacts"" good",CTS_MeetChickenIntro_Finish:Add his ID card,
 CTS_MeetChickenIntro_Finish,DialogOptionSelected,$option == CTS_MeetChickenIntro_Finish,"RemoveBarEvent CTS_MeetChickenIntro_1 ""Approach the spacer"" ""A spacer wearing a grimy hardsuit with a full face mask is sitting in a table area, tinkering with an array of electrical components, he looks up at you as you walk in and motions with his hand.""",,backToBar:Head back to the bar,

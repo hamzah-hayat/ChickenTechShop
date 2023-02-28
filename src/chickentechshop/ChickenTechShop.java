@@ -12,8 +12,6 @@ public class ChickenTechShop extends BaseModPlugin {
 
         MarketAPI market = Global.getSector().getEntityById("nex_prismFreeport").getMarket();
 
-        market.addSubmarket("chicken_market");
-
         ChickenQuestUtils.createChicken(market);
     }
 }
