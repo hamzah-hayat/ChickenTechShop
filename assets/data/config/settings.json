@@ -1,7 +1,10 @@
 {
-	"graphics":{
-		"characters":{
-			"chicken":"graphics/portraits/chicken.png"
+	"ruleCommandPackages": [
+		"chickentechshop.campaign.rulecmd"
+	],
+	"graphics": {
+		"characters": {
+			"chicken": "graphics/portraits/chicken.png"
 		}
 	}
 }

@@ -1,10 +1,8 @@
-package chickentechshop.campaign.rulescmd;
+package chickentechshop.campaign.rulecmd;
 
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.util.Misc;
-
-import chickentechshop.campaign.intel.missions.chicken.ChickenQuestUtils;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
@@ -28,7 +26,7 @@ public class CTS_CreateSubmarketAndChickenContact extends BaseCommandPlugin {
 
         // Add Chicken Submarket to wherever Chicken is
         MarketAPI market = Global.getSector().getEntityById("nex_prismFreeport").getMarket();
-        ChickenQuestUtils.createChicken(market);
+        market.addSubmarket("chicken_market");
 
         // Add Chicken as a contact
 

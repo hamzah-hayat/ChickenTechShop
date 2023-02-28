@@ -1,4 +1,4 @@
-package chickentechshop.campaign.rulescmd;
+package chickentechshop.campaign.rulecmd;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
