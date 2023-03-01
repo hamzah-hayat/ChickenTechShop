@@ -1,8 +1,13 @@
 package chickentechshop.campaign.rulecmd;
 
 import com.fs.starfarer.api.campaign.rules.MemoryAPI;
+import com.fs.starfarer.api.characters.PersonAPI;
+import com.fs.starfarer.api.impl.campaign.missions.hub.BaseMissionHub;
 import com.fs.starfarer.api.impl.campaign.rulecmd.BaseCommandPlugin;
 import com.fs.starfarer.api.util.Misc;
+
+import chickentechshop.campaign.intel.TechMarketContact;
+import chickentechshop.campaign.intel.missions.chicken.ChickenQuestUtils;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.InteractionDialogAPI;
@@ -29,6 +34,11 @@ public class CTS_CreateSubmarketAndChickenContact extends BaseCommandPlugin {
         market.addSubmarket("chicken_market");
 
         // Add Chicken as a contact
+        PersonAPI chicken = Global.getSector().getImportantPeople().getPerson(ChickenQuestUtils.PERSON_CHICKEN);
+        BaseMissionHub.set(chicken, new BaseMissionHub(chicken));
+        chicken.getMemoryWithoutUpdate().set(BaseMissionHub.NUM_BONUS_MISSIONS, 1);
+        TechMarketContact intel = new TechMarketContact(chicken, market);
+        Global.getSector().getIntelManager().addIntel(intel, false, dialog.getTextPanel());
 
         return true;
     }

@@ -13,15 +13,39 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.submarkets.BaseSubmarketPlugin;
 import com.fs.starfarer.api.loading.FighterWingSpecAPI;
 import com.fs.starfarer.api.util.Highlights;
+import com.fs.starfarer.api.util.WeightedRandomPicker;
+
+import chickentechshop.campaign.intel.missions.chicken.ChickenQuestUtils;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+
 import org.apache.log4j.Logger;
 
 public class TechMarket extends BaseSubmarketPlugin {
 
     public static RepLevel MIN_STANDING = RepLevel.VENGEFUL;
     public static Logger log = Global.getLogger(TechMarket.class);
+
+    private int techMarketLevel = 1;
+    // private int costPerLevel = 50000;
+
+    public int getTechMarketLevel() {
+        return techMarketLevel;
+    }
+
+    // Tech Market can be 1 to 5 inclusive
+    public void setTechMarketLevel(int newLevel) {
+        if (newLevel < 1) {
+            techMarketLevel = 1;
+        } else if (newLevel > 5) {
+            techMarketLevel = 5;
+        } else {
+            techMarketLevel = newLevel;
+        }
+    }
 
     @Override
     public void updateCargoPrePlayerInteraction() {
@@ -50,14 +74,48 @@ public class TechMarket extends BaseSubmarketPlugin {
     // For now, just getting basic items to work!
     protected void addSpecialTech() {
         CargoAPI cargo = getCargo();
+        HashMap<String, Boolean> specialItemsList = new HashMap<String, Boolean>();
+        Random random = new Random();
 
+        // Get all the items to add via tags or hardcoded ids
         for (SpecialItemSpecAPI spec : Global.getSettings().getAllSpecialItemSpecs()) {
-            final String[] dontAdd = { "fighter_bp", "industry_bp", "modspec", "ship_bp", "weapon_bp",
-                    "nex_factionSetupItem" };
-            if (!Arrays.asList(dontAdd).contains(spec.getId())) {
-                log.info("Trying to add " + spec.getId());
-                cargo.addSpecial(new SpecialItemData(spec.getId(), null), 3f);
+            final String[] TagsToAdd = { "nanoforge", "hist3t" };
+
+            // Hardcoded for DIY planets atm, as they dont have any tags
+            final String[] ItemIDsToAdd = { "atmo_mineralizer", "atmo_sublimator", "solar_reflector",
+                    "tectonic_attenuator", "weather_core", "climate_sculptor", "gravity_oscillator", "rad_remover" };
+
+            for (String itemTag : spec.getTags()) {
+                if (Arrays.asList(TagsToAdd).contains(itemTag) || Arrays.asList(ItemIDsToAdd).contains(spec.getId())) {
+                    specialItemsList.put(spec.getId(), true);
+                }
             }
+
+            if (Arrays.asList(ItemIDsToAdd).contains(spec.getId())) {
+                specialItemsList.put(spec.getId(), true);
+            }
+
+        }
+
+        // Now Pick based on the techMarketLevel
+        // Take random 20% of total items per market level
+        // Quantity is random number from 1 to market level
+        // Make our random picker list
+        WeightedRandomPicker<String> randomPicker = new WeightedRandomPicker<>(itemGenRandom);
+        for (HashMap.Entry<String, Boolean> item : specialItemsList.entrySet()) {
+            randomPicker.add(item.getKey());
+        }
+
+        // Then add the items
+        for (int i = 0; i < (randomPicker.getTotal() / 5) * techMarketLevel; i++) {
+            if (randomPicker.isEmpty())
+                break;
+
+            String itemID = randomPicker.pickAndRemove();
+            // Guaranteed to get at least 1, more based on tech level
+            int quantity = random.nextInt(techMarketLevel) + 1;
+            log.info("Trying to add " + itemID + " with quantity " + quantity);
+            cargo.addSpecial(new SpecialItemData(itemID, null), quantity);
         }
     }
 
@@ -108,9 +166,10 @@ public class TechMarket extends BaseSubmarketPlugin {
 
     @Override
     public float getTariff() {
-        RepLevel level = submarket.getFaction().getRelationshipLevel(Global.getSector().getFaction(Factions.PLAYER));
+        RepLevel chicken_repLevel = Global.getSector().getImportantPeople().getPerson(ChickenQuestUtils.PERSON_CHICKEN)
+                .getRelToPlayer().getLevel();
         float mult = 1f;
-        switch (level) {
+        switch (chicken_repLevel) {
             case NEUTRAL:
                 mult = 1f;
                 break;
