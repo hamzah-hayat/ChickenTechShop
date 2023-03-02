@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.FactionAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
@@ -13,6 +14,8 @@ import com.fs.starfarer.api.ui.LabelAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.ui.UIComponentAPI;
 import com.fs.starfarer.api.util.Misc;
+
+import chickentechshop.campaign.submarkets.TechMarket;
 
 /**
  * Based of the SpecialMarketContact from Nexerelin
@@ -94,7 +97,17 @@ public class TechMarketContact extends ContactIntel {
             }
         }
 
-        addBulletPoints(info, ListInfoMode.IN_DESC);
+        // Tech Market Info
+        MarketAPI market = Global.getSector().getEntityById("nex_prismFreeport").getMarket();
+        TechMarket submarket = (TechMarket) market.getSubmarket("chicken_market").getPlugin();
+        info.addPara(
+                person.getNameString() + " owns a Tech Market " + market.getOnOrAt() + " " + market.getName() + ".",
+                5f);
+        info.addPara("The Tech Market is currently at Level " + submarket.getTechMarketLevel() + ".", 5f);
+        if(submarket.getTechMarketLevel()<5){
+            info.addPara(submarket.ToNextLevelCreditsString() + " credits to next level", 5f);
+        }
+
         long ts = BaseMissionHub.getLastOpenedTimestamp(person);
         info.addPara("Last visited: %s.", opad, h, Misc.getDetailedAgoString(ts));
     }

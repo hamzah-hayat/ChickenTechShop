@@ -30,7 +30,8 @@ public class TechMarket extends BaseSubmarketPlugin {
     public static Logger log = Global.getLogger(TechMarket.class);
 
     private int techMarketLevel = 1;
-    // private int costPerLevel = 50000;
+    private int currentCredits = 0;
+    private int[] levelCosts = { 100000, 150000, 200000, 250000 };
 
     public int getTechMarketLevel() {
         return techMarketLevel;
@@ -45,6 +46,24 @@ public class TechMarket extends BaseSubmarketPlugin {
         } else {
             techMarketLevel = newLevel;
         }
+    }
+
+    // Adding credits is the main way we increase our TechLevel
+    public void addCreditsToTechMarket(int credits) {
+        // The max level is 5
+        if (techMarketLevel >= 5) {
+            return;
+        }
+
+        currentCredits += credits;
+        if (currentCredits >= levelCosts[getTechMarketLevel() - 1]) {
+            currentCredits -= levelCosts[getTechMarketLevel() - 1];
+            setTechMarketLevel(getTechMarketLevel() + 1);
+        }
+    }
+
+    public String ToNextLevelCreditsString() {
+        return currentCredits + "/" + levelCosts[getTechMarketLevel() - 1];
     }
 
     @Override
@@ -168,25 +187,25 @@ public class TechMarket extends BaseSubmarketPlugin {
     public float getTariff() {
         RepLevel chicken_repLevel = Global.getSector().getImportantPeople().getPerson(ChickenQuestUtils.PERSON_CHICKEN)
                 .getRelToPlayer().getLevel();
-        float mult = 1f;
+        float mult;
         switch (chicken_repLevel) {
             case NEUTRAL:
-                mult = 1f;
-                break;
-            case FAVORABLE:
-                mult = 0.9f;
-                break;
-            case WELCOMING:
-                mult = 0.75f;
-                break;
-            case FRIENDLY:
-                mult = 0.65f;
-                break;
-            case COOPERATIVE:
                 mult = 0.5f;
                 break;
+            case FAVORABLE:
+                mult = 0.4f;
+                break;
+            case WELCOMING:
+                mult = 0.3f;
+                break;
+            case FRIENDLY:
+                mult = 0.2f;
+                break;
+            case COOPERATIVE:
+                mult = 0.1f;
+                break;
             default:
-                mult = 1f;
+                mult = 0.5f;
         }
         return mult;
     }

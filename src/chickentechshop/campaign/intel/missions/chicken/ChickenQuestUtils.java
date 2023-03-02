@@ -10,9 +10,9 @@ import com.fs.starfarer.api.impl.campaign.ids.Ranks;
 import com.fs.starfarer.api.impl.campaign.ids.Voices;
 
 public class ChickenQuestUtils {
-		
+
 	public static final String PERSON_CHICKEN = "chicken";
-	
+
 	public static void createChicken(MarketAPI market) {
 		PersonAPI person = Global.getFactory().createPerson();
 		person.setId(PERSON_CHICKEN);
@@ -26,6 +26,8 @@ public class ChickenQuestUtils {
 		person.getName().setLast("");
 		person.setPortraitSprite(Global.getSettings().getSpriteName("characters", "chicken"));
 		person.addTag("chicken");
+		// person.addTag(Tags.CONTACT_TRADE);
+		// person.addTag(Tags.CONTACT_UNDERWORLD);
 		Global.getSector().getImportantPeople().addPerson(person);
 		market.addPerson(person);
 	}

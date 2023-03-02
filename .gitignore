@@ -19,3 +19,5 @@ package-lock.json
 /mod_info.json
 data/
 graphics/
+# Dont ignore anything in assets folder
+!assets/**
