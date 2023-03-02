@@ -232,10 +232,6 @@ public class TechMarket extends BaseSubmarketPlugin {
     }
 
     @Override
-    public void reportPlayerMarketTransaction(PlayerMarketTransaction transaction) {
-    }
-
-    @Override
     public String getIllegalTransferText(FleetMemberAPI member, TransferAction action) {
         return "No sales/returns";
     }

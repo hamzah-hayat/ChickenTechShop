@@ -20,8 +20,8 @@ public class ChickenQuestUtils {
 		person.setVoice(Voices.SPACER);
 		person.setFaction(Factions.INDEPENDENT);
 		person.setGender(FullName.Gender.MALE);
-		person.setRankId(Ranks.SPECIAL_AGENT);
-		person.setPostId(Ranks.POST_SPECIAL_AGENT);
+		person.setRankId(Ranks.CITIZEN);
+		person.setPostId(Ranks.POST_TRADER);
 		person.getName().setFirst("Chicken");
 		person.getName().setLast("");
 		person.setPortraitSprite(Global.getSettings().getSpriteName("characters", "chicken"));

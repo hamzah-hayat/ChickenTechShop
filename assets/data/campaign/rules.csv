@@ -3,7 +3,7 @@ id,trigger,conditions,script,text,options,notes
 CTS_BarEventChickenStart,AddBarEvents,"CTS_CheckPlayerLevel 10
 $market.id == nex_prismFreeport 
 RollProbability 1 
-!$global.CTS_ChickenIntroComplete","AddBarEvent CTS_MeetChickenIntro_1 ""Approach the spacer"" ""A spacer wearing a grimy hardsuit with a full face mask is sitting in a table area, tinkering with an array of electrical components, he looks up at you as you walk in and motions with his hand."" highlight",,,
+!$global.CTS_ChickenIntroComplete","AddBarEvent CTS_MeetChickenIntro_1 ""Approach the spacer in the grimy hardsuit"" ""A spacer wearing a grimy hardsuit with a full face mask is sitting in a table area, tinkering with an array of electrical components, he looks up at you as you walk in and motions with his hand."" highlight",,,
 CTS_BarEventChickenIntro_1,DialogOptionSelected,$option == CTS_MeetChickenIntro_1,BeginConversation chicken true true,"You move towards the spacer, who quickly begins to move his tools and components on the table to the side.
 
 ""Sit down."" a raspy voice speaks beneath the heavy hardsuit sitting in front of you. ""I've heard of you Captain, you've been making yourself known to the sector. I have a proposition for you.""
@@ -40,8 +40,8 @@ Call $ddro_ref showMap ""Destination: $ddro_systemName""","""Alright, so I've go
 ""There might be some heat on this, so be careful. Once my contact confirms the pickup, I'll transfer $ddro_reward credits to you, what do you think?""","contact_accept:Accept
 contact_decline:Decline",
 CTS_jabrBlurb,cts_jabr_blurb,,,"""One of my contacts has been caught trying to get into a secure storage, I need someone to free him""",,
-CTS_jabrOfferOption,cts_jabr_option,,,,jabr_start:Ask about freeing the contact,
-CTS_jabrOfferTextContact,DialogOptionSelected,$option == jabr_start,"$missionId = cts_jabr
+CTS_jabrOfferOption,cts_jabr_option,,,,cts_jabr_start:Ask about freeing the contact,
+CTS_jabrOfferTextContact,DialogOptionSelected,$option == cts_jabr_start,"$missionId = cts_jabr
 Highlight $jabr_dist $jabr_reward $jabr_marines
 Call $jabr_ref showMap ""Target: $jabr_marketName""","""I would like you to free my contact $jabr_marketOnOrAt $jabr_marketName, about $jabr_dist light-years away. Best to do it quietly, less noise is better for us. Once you bring him back here, I'll ping $jabr_reward credits over to you.""
 
@@ -67,3 +67,12 @@ Call $ssat_ref showMap ""Target: $ssat_marketName""","""The satellite I had in o
 
 ""Fortunately I've got another satellite ready to go with some new improvements to boot. If you get it deployed without anyone noticing, I'll transfer your reward of $ssat_reward credits. Can you do this?""","contact_accept:Accept
 contact_decline:Decline",
+CTS_bpbuyBlurb,cts_bpbuy_blurb,$id == chicken,,"""I've decrypted a blueprint package, which gives many blueprints for the price of one!""",,
+CTS_bpbuyOfferOption,cts_bpbuy_option,,,,"cts_bpbuy_start:Ask about the Blueprint package
+",
+CTS_bpbuyOfferText,DialogOptionSelected,"$id == chicken
+$option == cts_bpbuy_start","$missionId = cts_bpbuy
+SetTextHighlights $cts_bpbuy_count","""I currently have $cts_bpbuy_count blueprint package(s), hot off the decryption stack. It took the AI cores a while to crack these and sadly one of my gamma cores is stuck in a recursive loop.
+I dont have much use for blueprints aside from selling them, but I wanted to give you the first chance to get them before my usual buyers.""","cts_bpbuy_view:See what $personName has to offer
+contact_decline:Decline",
+CTS_bpbuyOfferView,DialogOptionSelected,$option == cts_bpbuy_view,Call $cts_bpbuy_ref2 showBlueprintPackages,,,

@@ -4,3 +4,4 @@ cts_ddro,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/dead_dro
 cts_jabr,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/jailbreak.png,chickentechshop.campaign.intel.missions.chicken.CTS_JailbreakMission
 cts_smug,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/smuggle.png,chickentechshop.campaign.intel.missions.chicken.CTS_SmugglingMission
 cts_ssat,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/spysat.png,chickentechshop.campaign.intel.missions.chicken.CTS_SpySatDeployment
+cts_bpbuy,,,chicken,,,10,30,60,WELCOMING,,,,,,,chickentechshop.campaign.intel.missions.chicken.CTS_BlueprintPackagePurchase
