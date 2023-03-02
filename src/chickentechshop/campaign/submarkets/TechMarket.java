@@ -13,6 +13,7 @@ import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.submarkets.BaseSubmarketPlugin;
 import com.fs.starfarer.api.loading.FighterWingSpecAPI;
 import com.fs.starfarer.api.util.Highlights;
+import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
 
 import chickentechshop.campaign.intel.missions.chicken.ChickenQuestUtils;
@@ -246,12 +247,16 @@ public class TechMarket extends BaseSubmarketPlugin {
 
     @Override
     public String getTooltipAppendix(CoreUIAPI ui) {
-        return null;
+        return "The Current Level of this market is " + techMarketLevel + ". The next level will be reached in "
+                + ToNextLevelCreditsString() + " credits";
     }
 
     @Override
     public Highlights getTooltipAppendixHighlights(CoreUIAPI ui) {
-        return null;
+        Highlights highlights = new Highlights();
+        highlights.append(techMarketLevel + "", Misc.getHighlightColor());
+        highlights.append(ToNextLevelCreditsString() + " credits" + "", Misc.getHighlightColor());
+        return highlights;
     }
 
     @Override

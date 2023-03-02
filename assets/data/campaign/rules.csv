@@ -1,5 +1,5 @@
 id,trigger,conditions,script,text,options,notes
-# Main Quests,,,,,,
+# Main Quests
 CTS_BarEventChickenStart,AddBarEvents,"CTS_CheckPlayerLevel 10
 $market.id == nex_prismFreeport 
 RollProbability 1 
@@ -12,12 +12,13 @@ He pulls a bag from underneath the desk and lifts it onto the table, clattering 
 
 ""Privacy. Now, where is it? I know it's in here..."" he begins to pull out rusty and dirty eletrical and prefab components out of his bag, tossing them onto the steadily growing pile of junk to his side. He then reaches forward and pulls out a no-descript black box, with a simple clasp on the front.
 
-""Here, take a look"" he pushes the box towards you and points at the latch.",CTS_MeetChickenIntro_2:Open the box,
-CTS_MeetChickenIntro_2,DialogOptionSelected,$option == CTS_MeetChickenIntro_2,"CTS_CreateSubmarketAndChickenContact
-CTS_GetIntroGiftFromChicken
+""Here, take a look"" he pushes the box towards you and points at the latch.",CTS_MeetChickenIntro_Finish:Open the box,
+CTS_MeetChickenIntro_Finish,DialogOptionSelected,$option == CTS_MeetChickenIntro_Finish,"CTS_CreateSubmarketAndChickenContact
+AddRemoveCommodity beta_core 1
 $global.CTS_ChickenIntroComplete = true
 AddTextSmall ""You now have access to Chicken's Tech Shop! Check the Trade screen for the new submarket"" good
-AddTextSmall ""Doing contracts for Chicken will increase the number of items available for purchase in his Tech market"" info","Inside the box, you find a Beta Core, neatly packed into a tight cushioned space.
+AddTextSmall ""Doing contracts for Chicken will increase the number of items available for purchase in his Tech market"" highlight
+RemoveBarEvent CTS_MeetChickenIntro_1 ""Approach the spacer"" ""A spacer wearing a grimy hardsuit with a full face mask is sitting in a table area, tinkering with an array of electrical components, he looks up at you as you walk in and motions with his hand.""","Inside the box, you find a Beta Core, neatly packed into a tight cushioned space.
 
 ""I would have given you an Alpha core, but I dont have any, not yet anyway."" He closes the box and pushes it towards you. ""Consider it a gift for our ongoing relationship""
 
@@ -25,9 +26,44 @@ AddTextSmall ""Doing contracts for Chicken will increase the number of items ava
 
 ""Just tap, we'll talk again soon"" He puts down his Tri-pad onto the table, and without further ado begins to stuff his pile of scrap back into his bags. You tap your pad to his, and one ping later have his details recorded for your use.
 
-As Chicken stands up, he closes the privacy field and gives you a quick Hegemony style salute, ""See you around Captain, remember to check in every now and then"" he pauses for a moment, then points at the Beta box and adds ""Dont let that Beta get you down, he's been rude to everyone so far"". With that Chicken staggers out of the bar, weighed down with his heavy bags of scrap tech.",CTS_MeetChickenIntro_Finish:Watch him pack up,
-CTS_MeetChickenIntro_Finish,DialogOptionSelected,$option == CTS_MeetChickenIntro_Finish,"RemoveBarEvent CTS_MeetChickenIntro_1 ""Approach the spacer"" ""A spacer wearing a grimy hardsuit with a full face mask is sitting in a table area, tinkering with an array of electrical components, he looks up at you as you walk in and motions with his hand.""",,backToBar:Head back to the bar,
-# Interactions,,,,,,
+As Chicken stands up, he closes the privacy field and gives you a quick Hegemony style salute, ""See you around Captain, remember to check in every now and then"" he pauses for a moment, then points at the Beta box and adds ""Dont let that Beta get you down, he's been rude to everyone so far"". With that Chicken staggers out of the bar, weighed down with his heavy bags of scrap tech.",backToBar:Head back to the bar,
+# Custom Interactions
 # CTS_AskResetInventory,PopulateOptions,$id == chicken,,,CTS_AskResetInventory_Choice:Ask Chicken if he can change his Inventory,
 # CTS_AskResetInventory_Choice,DialogOptionSelected,$option == CTS_AskResetInventory_Choice,,"""Are you sure?""",,
-,,,,,,
+# Mission Dialogues
+CTS_ddroBlurb,cts_ddro_blurb,,,"""I've got a package that needs to be delivered to a contact of mine, should be easy enough.""",,
+CTS_ddroOfferOption,cts_ddro_option,,,,cts_ddro_start:Ask about the secret package delivery,
+CTS_ddroOfferTextContact,DialogOptionSelected,$option == cts_ddro_start,"$missionId = cts_ddro
+Highlight $ddro_dist $ddro_reward
+Call $ddro_ref showMap ""Destination: $ddro_systemName""","""Alright, so I've got $ddro_aOrAnThing which needs to be dropped in the system $ddro_systemName, which is $ddro_dist light years away.""
+
+""There might be some heat on this, so be careful. Once my contact confirms the pickup, I'll transfer $ddro_reward credits to you, what do you think?""","contact_accept:Accept
+contact_decline:Decline",
+CTS_jabrBlurb,cts_jabr_blurb,,,"""One of my contacts has been caught trying to get into a secure storage, I need someone to free him""",,
+CTS_jabrOfferOption,cts_jabr_option,,,,jabr_start:Ask about freeing the contact,
+CTS_jabrOfferTextContact,DialogOptionSelected,$option == jabr_start,"$missionId = cts_jabr
+Highlight $jabr_dist $jabr_reward $jabr_marines
+Call $jabr_ref showMap ""Target: $jabr_marketName""","""I would like you to free my contact $jabr_marketOnOrAt $jabr_marketName, about $jabr_dist light-years away. Best to do it quietly, less noise is better for us. Once you bring him back here, I'll ping $jabr_reward credits over to you.""
+
+""I've got some data that will be helpful to you"" $HeOrShe taps at a TriPad and your corresponding system receives detailed reports on the ground defenses and troop deployments of $jabr_marketName. After a quick review, you estimate that you'd need around $jabr_marines marines to carry off this operation.","contact_accept:Accept
+contact_decline:Decline",
+CTS_smugBlurb,cts_smug_blurb,,,"""Someone I know needs $smug_commodityName moved to $smug_marketName.""
+OR
+""I need to move some $smug_commodityName to $smug_marketName for a smuggler thats helped me out a few times.""",,
+CTS_smugOfferOption,cts_smug_option,,,,cts_smug_start:Ask about the discreet smuggling operation,
+CTS_smugOfferTextContact,DialogOptionSelected,$option == cts_smug_start,"$missionId = cts_smug
+SetTextHighlights $smug_quantity $smug_dist $smug_reward
+ShowRemainingCapacity $smug_commodityId
+Call $smug_ref showMap ""Destination: $smug_marketName""","""Our smuggler ""friend"" needs $smug_quantity units of $smug_commodityName moved to $smug_marketName, which is $smug_dist light-years away. 
+Dont ask me why, I dont honestly know - or want to know. In return I've been promised access to some tech and a tidy sum of credits. Your cut will be $smug_reward credits.""","contact_accept:Accept
+contact_decline:Decline",
+CTS_ssatBlurb,cts_ssat_blurb,,,"""I used to have a spy satellite in the orbit of $ssat_marketName, but its gone now. I'll need a new one deployed ASAP.""
+OR
+""My satellite at $ssat_marketName is no longer responding. I need a new one to be placed in orbit.""",,
+CTS_ssatOfferOption,cts_ssat_option,,,,cts_ssat_start:Ask about deploying the satellite,
+CTS_ssatOfferTextContact,DialogOptionSelected,$option == cts_ssat_start,"$missionId = cts_ssat
+SetTextHighlights $ssat_reward
+Call $ssat_ref showMap ""Target: $ssat_marketName""","""The satellite I had in orbit of $ssat_marketName in the $ssat_systemName is gone. Some $cts_ssat_insult in a souped up frigate managed to crash into it, disabling its stealth module. The patrols are being a bit more alert then usual and I now no longer know when intresting cargo is being offloaded.""
+
+""Fortunately I've got another satellite ready to go with some new improvements to boot. If you get it deployed without anyone noticing, I'll transfer your reward of $ssat_reward credits. Can you do this?""","contact_accept:Accept
+contact_decline:Decline",
