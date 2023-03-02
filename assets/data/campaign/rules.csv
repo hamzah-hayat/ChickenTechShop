@@ -14,11 +14,20 @@ He pulls a bag from underneath the desk and lifts it onto the table, clattering 
 
 ""Here, take a look"" he pushes the box towards you and points at the latch.",CTS_MeetChickenIntro_2:Open the box,
 CTS_MeetChickenIntro_2,DialogOptionSelected,$option == CTS_MeetChickenIntro_2,"CTS_CreateSubmarketAndChickenContact
+CTS_GetIntroGiftFromChicken
 $global.CTS_ChickenIntroComplete = true
 AddTextSmall ""You now have access to Chicken's Tech Shop! Check the Trade screen for the new submarket"" good
-AddTextSmall ""Added Chicken to your contacts"" good","""Thanks!""",CTS_MeetChickenIntro_Finish:Add his ID card,
+AddTextSmall ""Doing contracts for Chicken will increase the number of items available for purchase in his Tech market"" info","Inside the box, you find a Beta Core, neatly packed into a tight cushioned space.
+
+""I would have given you an Alpha core, but I dont have any, not yet anyway."" He closes the box and pushes it towards you. ""Consider it a gift for our ongoing relationship""
+
+""I am in the market for technology, I have an array of contacts across the sector that can get me - and therefore you, access to all the domain tech you need. This includes AI cores, Colony items, Blueprints and more. If you have the time, helping me with the occasional request would let me increase the selection available to you"".
+
+""Just tap, we'll talk again soon"" He puts down his Tri-pad onto the table, and without further ado begins to stuff his pile of scrap back into his bags. You tap your pad to his, and one ping later have his details recorded for your use.
+
+As Chicken stands up, he closes the privacy field and gives you a quick Hegemony style salute, ""See you around Captain, remember to check in every now and then"" he pauses for a moment, then points at the Beta box and adds ""Dont let that Beta get you down, he's been rude to everyone so far"". With that Chicken staggers out of the bar, weighed down with his heavy bags of scrap tech.",CTS_MeetChickenIntro_Finish:Watch him pack up,
 CTS_MeetChickenIntro_Finish,DialogOptionSelected,$option == CTS_MeetChickenIntro_Finish,"RemoveBarEvent CTS_MeetChickenIntro_1 ""Approach the spacer"" ""A spacer wearing a grimy hardsuit with a full face mask is sitting in a table area, tinkering with an array of electrical components, he looks up at you as you walk in and motions with his hand.""",,backToBar:Head back to the bar,
 # Interactions,,,,,,
-CTS_AskResetInventory,PopulateOptions,$id == chicken,,,CTS_AskResetInventory_Choice:Ask Chicken if he can change his Inventory,
-CTS_AskResetInventory_Choice,DialogOptionSelected,$option == CTS_AskResetInventory_Choice,,"""Are you sure?""",,
+# CTS_AskResetInventory,PopulateOptions,$id == chicken,,,CTS_AskResetInventory_Choice:Ask Chicken if he can change his Inventory,
+# CTS_AskResetInventory_Choice,DialogOptionSelected,$option == CTS_AskResetInventory_Choice,,"""Are you sure?""",,
 ,,,,,,
