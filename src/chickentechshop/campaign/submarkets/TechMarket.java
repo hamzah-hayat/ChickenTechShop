@@ -59,6 +59,7 @@ public class TechMarket extends BaseSubmarketPlugin {
         if (currentCredits >= levelCosts[getTechMarketLevel() - 1]) {
             currentCredits -= levelCosts[getTechMarketLevel() - 1];
             setTechMarketLevel(getTechMarketLevel() + 1);
+            updateCargoForce();
         }
     }
 
@@ -71,6 +72,25 @@ public class TechMarket extends BaseSubmarketPlugin {
         // log.info("Days since update: " + sinceLastCargoUpdate);
         if (sinceLastCargoUpdate < 3)
             return;
+        sinceLastCargoUpdate = 0f;
+
+        CargoAPI cargo = getCargo();
+
+        // clear inventory
+        for (CargoStackAPI s : cargo.getStacksCopy()) {
+            float qty = s.getSize();
+            cargo.removeItems(s.getType(), s.getData(), qty);
+        }
+        cargo.removeEmptyStacks();
+        // addShips();
+        // addWings();
+        // addWeapons();
+        addSpecialTech();
+        cargo.sort();
+    }
+
+    // Force update the Marketplace
+    public void updateCargoForce() {
         sinceLastCargoUpdate = 0f;
 
         CargoAPI cargo = getCargo();

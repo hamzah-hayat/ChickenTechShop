@@ -1,6 +1,6 @@
 mission id,person id,tagsAll,tagsAny,tagsNotAny,tags,freq,min timeout,max timeout,min rep,max rep,importance,reqMissionAny,reqMissionAll,reqMissionNone,icon,plugin
-cts_ddro,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/dead_drop.png,chickentechshop.campaign.intel.missions.chicken.CTS_DeadDropMission
-cts_dhi,,,chicken,,,10,30,60,FRIENDLY,,MEDIUM,,,,graphics/icons/missions/tactical_bombardment.png,com.fs.starfarer.api.impl.campaign.missions.DisruptHeavyIndustry
-cts_jabr,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/jailbreak.png,com.fs.starfarer.api.impl.campaign.missions.JailbreakMission
-cts_smug,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/smuggle.png,com.fs.starfarer.api.impl.campaign.missions.SmugglingMission
-cts_ssat,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/spysat.png,com.fs.starfarer.api.impl.campaign.missions.SpySatDeployment
+ddro,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/dead_drop.png,chickentechshop.campaign.intel.missions.chicken.CTS_DeadDropMission
+dhi,,,chicken,,,10,30,60,FRIENDLY,,MEDIUM,,,,graphics/icons/missions/tactical_bombardment.png,com.fs.starfarer.api.impl.campaign.missions.CTS_DisruptHeavyIndustry
+jabr,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/jailbreak.png,com.fs.starfarer.api.impl.campaign.missions.CTS_JailbreakMission
+smug,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/smuggle.png,com.fs.starfarer.api.impl.campaign.missions.CTS_SmugglingMission
+ssat,,,chicken,,,10,30,60,INHOSPITABLE,,,,,,graphics/icons/missions/spysat.png,com.fs.starfarer.api.impl.campaign.missions.CTS_SpySatDeployment
