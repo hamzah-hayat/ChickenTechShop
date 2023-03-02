@@ -1,8 +1,6 @@
 package chickentechshop.campaign.intel;
 
 import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.FactionAPI;
@@ -44,12 +42,8 @@ public class TechMarketContact extends ContactIntel {
 
     @Override
     public void createSmallDescription(TooltipMakerAPI info, float width, float height) {
-        String pName = Misc.getPersonalityName(person);
 
         Color h = Misc.getHighlightColor();
-        Color g = Misc.getGrayColor();
-        Color tc = Misc.getTextColor();
-        float pad = 3f;
         float opad = 10f;
 
         FactionAPI faction = person.getFaction();
@@ -104,7 +98,7 @@ public class TechMarketContact extends ContactIntel {
                 person.getNameString() + " owns a Tech Market " + market.getOnOrAt() + " " + market.getName() + ".",
                 5f);
         info.addPara("The Tech Market is currently at Level " + submarket.getTechMarketLevel() + ".", 5f);
-        if(submarket.getTechMarketLevel()<5){
+        if (submarket.getTechMarketLevel() < 5) {
             info.addPara(submarket.ToNextLevelCreditsString() + " credits to next level", 5f);
         }
 
