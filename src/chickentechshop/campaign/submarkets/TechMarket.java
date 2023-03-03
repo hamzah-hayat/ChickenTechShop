@@ -4,7 +4,6 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CargoAPI;
 import com.fs.starfarer.api.campaign.CargoStackAPI;
 import com.fs.starfarer.api.campaign.CoreUIAPI;
-import com.fs.starfarer.api.campaign.PlayerMarketTransaction;
 import com.fs.starfarer.api.campaign.RepLevel;
 import com.fs.starfarer.api.campaign.SpecialItemData;
 import com.fs.starfarer.api.campaign.SpecialItemSpecAPI;
@@ -71,7 +70,7 @@ public class TechMarket extends BaseSubmarketPlugin {
     @Override
     public void updateCargoPrePlayerInteraction() {
         // log.info("Days since update: " + sinceLastCargoUpdate);
-        if (sinceLastCargoUpdate < 3)
+        if (sinceLastCargoUpdate < 30)
             return;
         sinceLastCargoUpdate = 0f;
 
@@ -243,15 +242,15 @@ public class TechMarket extends BaseSubmarketPlugin {
 
     @Override
     public String getTooltipAppendix(CoreUIAPI ui) {
-        return "The Current Level of this market is " + techMarketLevel + ". The next level will be reached in "
+        return "The Tech Market is currently at Level " + techMarketLevel + ".\nThe next level will be reach in "
                 + ToNextLevelCreditsString() + " credits";
     }
 
     @Override
     public Highlights getTooltipAppendixHighlights(CoreUIAPI ui) {
         Highlights highlights = new Highlights();
-        highlights.append(techMarketLevel + "", Misc.getHighlightColor());
-        highlights.append(ToNextLevelCreditsString() + " credits" + "", Misc.getHighlightColor());
+        highlights.append("Level " + techMarketLevel, Misc.getHighlightColor());
+        highlights.append(ToNextLevelCreditsString() + " Credits" + "", Misc.getHighlightColor());
         return highlights;
     }
 

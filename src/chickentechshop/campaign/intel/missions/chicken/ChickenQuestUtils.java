@@ -31,4 +31,8 @@ public class ChickenQuestUtils {
 		Global.getSector().getImportantPeople().addPerson(person);
 		market.addPerson(person);
 	}
+
+	public static MarketAPI getChickenMarket() {
+		return Global.getSector().getImportantPeople().getPerson(ChickenQuestUtils.PERSON_CHICKEN).getMarket();
+	}
 }

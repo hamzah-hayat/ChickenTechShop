@@ -30,7 +30,7 @@ public class CTS_CreateSubmarketAndChickenContact extends BaseCommandPlugin {
         }
 
         // Add Chicken Submarket to wherever Chicken is
-        MarketAPI market = Global.getSector().getEntityById("nex_prismFreeport").getMarket();
+        MarketAPI market = ChickenQuestUtils.getChickenMarket();
         market.addSubmarket("chicken_market");
 
         // Add Chicken as a contact

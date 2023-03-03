@@ -12,7 +12,7 @@ public class CTS_DisruptHeavyIndustry extends DisruptHeavyIndustry {
 		super.notifyEnding();
 
 		// Add to Chickens Tech market Level
-		MarketAPI market = Global.getSector().getEntityById("nex_prismFreeport").getMarket();
+		MarketAPI market = ChickenQuestUtils.getChickenMarket();
 		TechMarket submarket = (TechMarket) market.getSubmarket("chicken_market").getPlugin();
 		submarket.addCreditsToTechMarket(creditReward);
 	}

@@ -8,27 +8,23 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.util.Misc;
 
 import chickentechshop.campaign.intel.missions.chicken.ChickenQuestUtils;
-import chickentechshop.campaign.submarkets.TechMarket;
-
 import java.util.List;
 import java.util.Map;
 
 /**
- * Checks the player level
+ * Makes sure Chicken is here
  */
-public class CTS_ResetTechMarketInventory extends BaseCommandPlugin {
+public class CTS_IsChickenHere extends BaseCommandPlugin {
 
     @Override
     public boolean execute(final String ruleId, final InteractionDialogAPI dialog, final List<Misc.Token> params,
             final Map<String, MemoryAPI> memoryMap) {
-        if (dialog == null) {
-            return false;
-        }
         MarketAPI market = ChickenQuestUtils.getChickenMarket();
-        TechMarket submarket = (TechMarket) market.getSubmarket("chicken_market").getPlugin();
-        submarket.updateCargoForce();
+        if (Global.getSector().getPlayerPerson().getMarket().getId() == market.getId()) {
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
 }
