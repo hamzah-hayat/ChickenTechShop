@@ -1,3 +1,20 @@
+Version 0.1.0
+
+This version marks the initial release of the mod. All basic features are complete as written below.
+
+Features:
+    - Tech Market
+        - Tech Market now sells AI Cores, Special Items (Colony Items and DIY Planet Items) and Blueprints
+        - Number of items for sale depends on the Tech Market Level, which is increased by doing contracts for Chicken
+    
+    - Chicken
+        - Chicken can be met once the Player is Level 10, an Intel message will be sent to the Player to tell them where Chicken is.
+        - Intro mission now gifts a Beta cores
+        - Chicken now has a set of basic contracts (based of vanilla ones), plus a special "Sale" mission for getting a Blueprint Package
+        - Custom text for each of the basic contracts
+        - Chicken spawns at (in order), the Prisim Freeport, Nova Maxios, an Independent market, any valid market and if there are NO spawn points (oh dear!) he will not spawn.
+
+
 Version 0.0.1 - 0.0.5
 
 Features

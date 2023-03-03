@@ -3,6 +3,15 @@
 A mod for Starsector that creates a special contact called Chicken, a spacer that specailises in selling tech goodies
 Meeting him will create a submarket at his location that sells items such as AI cores, Colony items and even Blueprints.
 
+## Information
+
+The inital contact will start once the Player is Level 10. An intel message will tell you where to meet Chicken for the introduction scene.
+This will unlock Chickens Tech Shop, a special submarket which gives you access to AI cores, Special Items and Blueprints.
+The number of items available for sale increases as you do contracts for Chicken. Once you reach certain credit thresholds the Tech market will increase in level, giving more options.
+Chickens missions are based of Vanilla ones (for now) with custom text.
+
+All feedback welcome.
+
 ## Credits
 
 I basically hacked my way through this using a combination of the following as guides, big thanks to them
@@ -14,6 +23,7 @@ I basically hacked my way through this using a combination of the following as g
 Also Special thanks to the template provided here [Starsector Mod Template by jaghaimo](https://github.com/jaghaimo/starsector-mod)
 The LICENSE_TEMPLATE.MD is for everything provided by said Template (Inital Commit - a417e4043ea1d1e01e76453c43254cd3dbb2b86e)
 While LICENSE.MD is for my work (Everything After)
+The assets\graphics\portraits\chicken.png icon is not included under any of the above licenses (its my personal icon). Please do not take/use it. It is currently a placeholder for Chickens actual portrait art (in progress).
 Feel free to use whatever you see here if you find it useful
 
 ## Template README
