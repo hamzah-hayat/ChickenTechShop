@@ -61,6 +61,7 @@ task release(type: Zip) {
     archiveFileName = "${project.name}-${readModInfoJson().version}.zip"
     destinationDirectory = file(rootDir)
     from 'assets'
+    from 'ChickenTechShop.version'
     from jar
     into project.name
 }
