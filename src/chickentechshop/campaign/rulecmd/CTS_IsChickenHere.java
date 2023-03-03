@@ -32,6 +32,13 @@ public class CTS_IsChickenHere extends BaseCommandPlugin {
         if (playerLocation.equals(chickenLocation)) {
             return true;
         }
+
+        // Random sector check
+        playerLocation = "market_" + playerLocation;
+        if (playerLocation.equals(chickenLocation)) {
+            return true;
+        }
+
         return false;
     }
 
