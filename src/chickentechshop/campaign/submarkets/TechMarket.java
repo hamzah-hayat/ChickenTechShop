@@ -254,7 +254,8 @@ public class TechMarket extends BaseSubmarketPlugin {
         }
 
         // Now make our Blueprints
-        int itemPickerNum = Math.round((((float) randomFighterPicker.getItems().size() / 5f) * (float) techMarketLevel));
+        int itemPickerNum = Math
+                .round((((float) randomFighterPicker.getItems().size() / 5f) * (float) techMarketLevel));
         // log.info("randomFighterPicker has " + randomFighterPicker.getItems().size());
         // log.info("num picked for fighters is " + itemPickerNum);
         for (int i = 0; i < itemPickerNum; i++) {
