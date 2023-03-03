@@ -2,7 +2,6 @@ package chickentechshop.campaign.intel.missions.chicken;
 
 import java.util.Random;
 
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.missions.SpySatDeployment;

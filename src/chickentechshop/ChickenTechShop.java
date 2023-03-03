@@ -7,7 +7,6 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.BaseCampaignEventListener;
 import com.fs.starfarer.api.campaign.SectorAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
-import com.fs.starfarer.api.characters.PersonAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Conditions;
 import com.fs.starfarer.api.impl.campaign.intel.misc.BreadcrumbIntel;
 
@@ -41,11 +40,14 @@ public class ChickenTechShop extends BaseModPlugin {
         }
 
         // Nova Maxios
-        market = Global.getSector().getEntityById("novamaxios").getMarket();
+        market = Global.getSector().getEntityById("new_maxios").getMarket();
         if (market != null) {
             ChickenQuestUtils.createChicken(market);
             return;
         }
+
+        // An Indepedent Market
+        Global.getSector().reportPlayerMarketTransaction(null);
     }
 
     @Override

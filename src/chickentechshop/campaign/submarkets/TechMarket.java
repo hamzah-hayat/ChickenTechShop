@@ -105,6 +105,7 @@ public class TechMarket extends BaseSubmarketPlugin {
         // addWings();
         // addWeapons();
         addSpecialTech();
+        addAICores();
         cargo.sort();
     }
 
@@ -156,6 +157,31 @@ public class TechMarket extends BaseSubmarketPlugin {
             log.info("Trying to add " + itemID + " with quantity " + quantity);
             cargo.addSpecial(new SpecialItemData(itemID, null), quantity);
         }
+    }
+
+    // Add a number of Gamma/Beta/Alpha Cores
+    // Beta Cores "unlock" at Market Level 2
+    // Alpha Cores "unlock" at Market Level 4
+    protected void addAICores() {
+        CargoAPI cargo = getCargo();
+        Random random = new Random();
+
+        // Add Gammas
+        int quantityGamma = random.nextInt(techMarketLevel) + 1;
+        cargo.addCommodity("gamma_core", quantityGamma);
+
+        // Add Betas
+        if (techMarketLevel >= 2) {
+            int quantityBeta = random.nextInt(techMarketLevel - 1) + 1;
+            cargo.addCommodity("beta_core", quantityBeta);
+        }
+
+        // Add Alphas
+        if (techMarketLevel >= 4) {
+            int quantityAlpha = random.nextInt(techMarketLevel - 3) + 1;
+            cargo.addCommodity("alpha_core", quantityAlpha);
+        }
+
     }
 
     protected void addWeapons() {

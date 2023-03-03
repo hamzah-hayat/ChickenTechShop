@@ -2,7 +2,6 @@ package chickentechshop.campaign.intel;
 
 import java.awt.Color;
 
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.FactionAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.characters.PersonAPI;
