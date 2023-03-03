@@ -33,7 +33,7 @@ public class TechMarket extends BaseSubmarketPlugin {
     public static RepLevel MIN_STANDING = RepLevel.VENGEFUL;
     public static Logger log = Global.getLogger(TechMarket.class);
 
-    private int techMarketLevel = 5;
+    private int techMarketLevel = 1;
     private int currentCredits = 0;
     private int[] levelCosts = { 100000, 150000, 200000, 250000 };
 
@@ -222,12 +222,14 @@ public class TechMarket extends BaseSubmarketPlugin {
         }
 
         // Now make our Blueprints
-        int itemPickerNum = Math.round(((randomWeaponPicker.getItems().size() / 5) * techMarketLevel));
+        int itemPickerNum = Math.round((((float) randomWeaponPicker.getItems().size() / 5f) * (float) techMarketLevel));
+        // log.info("randomWeaponPicker has " + randomWeaponPicker.getItems().size());
+        // log.info("num picked for weapons is " + itemPickerNum);
         for (int i = 0; i < itemPickerNum; i++) {
             if (!randomWeaponPicker.isEmpty()) {
                 String itemID = randomWeaponPicker.pickAndRemove();
                 // Only need 1 of each Blueprint
-                log.info("Trying to add Weapon blueprint for " + itemID);
+                // log.info("Trying to add Weapon blueprint for " + itemID);
                 cargo.addSpecial(new SpecialItemData(Items.WEAPON_BP, itemID), 1);
             }
         }
@@ -252,12 +254,14 @@ public class TechMarket extends BaseSubmarketPlugin {
         }
 
         // Now make our Blueprints
-        int itemPickerNum = Math.round(((randomFighterPicker.getItems().size() / 5) * techMarketLevel));
+        int itemPickerNum = Math.round((((float) randomFighterPicker.getItems().size() / 5f) * (float) techMarketLevel));
+        // log.info("randomFighterPicker has " + randomFighterPicker.getItems().size());
+        // log.info("num picked for fighters is " + itemPickerNum);
         for (int i = 0; i < itemPickerNum; i++) {
             if (!randomFighterPicker.isEmpty()) {
                 String itemID = randomFighterPicker.pickAndRemove();
                 // Only need 1 of each Blueprint
-                log.info("Trying to add Fighter blueprint for " + itemID);
+                // log.info("Trying to add Fighter blueprint for " + itemID);
                 cargo.addSpecial(new SpecialItemData(Items.FIGHTER_BP, itemID), 1);
             }
         }
@@ -282,12 +286,14 @@ public class TechMarket extends BaseSubmarketPlugin {
         }
 
         // Now make our Blueprints
-        int itemPickerNum = Math.round(((randomHullPicker.getItems().size() / 5) * techMarketLevel));
+        int itemPickerNum = Math.round((((float) randomHullPicker.getItems().size() / 5f) * (float) techMarketLevel));
+        // log.info("randomHullPicker has " + randomHullPicker.getItems().size());
+        // log.info("num picked for hulls is " + itemPickerNum);
         for (int i = 0; i < itemPickerNum; i++) {
             if (!randomHullPicker.isEmpty()) {
                 String itemID = randomHullPicker.pickAndRemove();
                 // Only need 1 of each Blueprint
-                log.info("Trying to add Hull blueprint for " + itemID);
+                // log.info("Trying to add Hull blueprint for " + itemID);
                 cargo.addSpecial(new SpecialItemData(Items.SHIP_BP, itemID), 1);
             }
         }
