@@ -33,7 +33,7 @@ public class TechMarket extends BaseSubmarketPlugin {
     public static RepLevel MIN_STANDING = RepLevel.VENGEFUL;
     public static Logger log = Global.getLogger(TechMarket.class);
 
-    private int techMarketLevel = 1;
+    private int techMarketLevel = 5;
     private int currentCredits = 0;
     private int[] levelCosts = { 100000, 150000, 200000, 250000 };
 
@@ -68,6 +68,9 @@ public class TechMarket extends BaseSubmarketPlugin {
     }
 
     public String ToNextLevelCreditsString() {
+        if (getTechMarketLevel() == 5) {
+            return "";
+        }
         return currentCredits + "/" + levelCosts[getTechMarketLevel() - 1];
     }
 
@@ -124,7 +127,7 @@ public class TechMarket extends BaseSubmarketPlugin {
                     vanillaSpecialItemsList.put(spec.getId(), true);
                     continue;
                 }
-                if (Arrays.asList(DIYPlanetsItemIDs).contains(itemTag)) {
+                if (Arrays.asList(DIYPlanetsItemIDs).contains(spec.getId())) {
                     DIYPlanetsSpecialItemsList.put(spec.getId(), true);
                     continue;
                 }
@@ -148,18 +151,21 @@ public class TechMarket extends BaseSubmarketPlugin {
         float totalItems = randomVanillaPicker.getTotal() + randomDIYPicker.getTotal();
 
         // Then add the items
-        for (int i = 0; i < (totalItems / 5) * techMarketLevel; i++) {
+        int itemPickerNum = Math.round(((totalItems / 5) * techMarketLevel));
+        for (int i = 0; i < itemPickerNum; i++) {
             if (!randomVanillaPicker.isEmpty()) {
                 String itemID = randomVanillaPicker.pickAndRemove();
-                // Guaranteed to get at least 1, more based on tech level
+                // Guaranteed to get at least 1, more based on tech level, clamp to 3
                 int quantity = itemGenRandom.nextInt(techMarketLevel) + 1;
+                quantity = Math.min(quantity, 3);
                 log.info("Trying to add " + itemID + " with quantity " + quantity);
                 cargo.addSpecial(new SpecialItemData(itemID, null), quantity);
             }
             if (!randomDIYPicker.isEmpty()) {
                 String itemID = randomDIYPicker.pickAndRemove();
-                // Guaranteed to get at least 1, more based on tech level
+                // Guaranteed to get at least 1, more based on tech level, clamp to 3
                 int quantity = itemGenRandom.nextInt(techMarketLevel) + 1;
+                quantity = Math.min(quantity, 3);
                 log.info("Trying to add " + itemID + " with quantity " + quantity);
                 cargo.addSpecial(new SpecialItemData(itemID, null), quantity);
             }
@@ -216,7 +222,8 @@ public class TechMarket extends BaseSubmarketPlugin {
         }
 
         // Now make our Blueprints
-        for (int i = 0; i < (randomWeaponPicker.getItems().size() / 5) * techMarketLevel; i++) {
+        int itemPickerNum = Math.round(((randomWeaponPicker.getItems().size() / 5) * techMarketLevel));
+        for (int i = 0; i < itemPickerNum; i++) {
             if (!randomWeaponPicker.isEmpty()) {
                 String itemID = randomWeaponPicker.pickAndRemove();
                 // Only need 1 of each Blueprint
@@ -245,7 +252,8 @@ public class TechMarket extends BaseSubmarketPlugin {
         }
 
         // Now make our Blueprints
-        for (int i = 0; i < (randomFighterPicker.getItems().size() / 5) * techMarketLevel; i++) {
+        int itemPickerNum = Math.round(((randomFighterPicker.getItems().size() / 5) * techMarketLevel));
+        for (int i = 0; i < itemPickerNum; i++) {
             if (!randomFighterPicker.isEmpty()) {
                 String itemID = randomFighterPicker.pickAndRemove();
                 // Only need 1 of each Blueprint
@@ -274,7 +282,8 @@ public class TechMarket extends BaseSubmarketPlugin {
         }
 
         // Now make our Blueprints
-        for (int i = 0; i < (randomHullPicker.getItems().size() / 5) * techMarketLevel; i++) {
+        int itemPickerNum = Math.round(((randomHullPicker.getItems().size() / 5) * techMarketLevel));
+        for (int i = 0; i < itemPickerNum; i++) {
             if (!randomHullPicker.isEmpty()) {
                 String itemID = randomHullPicker.pickAndRemove();
                 // Only need 1 of each Blueprint
@@ -348,6 +357,9 @@ public class TechMarket extends BaseSubmarketPlugin {
 
     @Override
     public String getTooltipAppendix(CoreUIAPI ui) {
+        if (getTechMarketLevel() == 5) {
+            return "The Tech market is at the Max Level 5";
+        }
         return "The Tech Market is currently at Level " + techMarketLevel + ".\nThe next level will be reach in "
                 + ToNextLevelCreditsString() + " credits";
     }
