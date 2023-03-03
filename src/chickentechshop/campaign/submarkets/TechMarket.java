@@ -7,10 +7,14 @@ import com.fs.starfarer.api.campaign.CoreUIAPI;
 import com.fs.starfarer.api.campaign.RepLevel;
 import com.fs.starfarer.api.campaign.SpecialItemData;
 import com.fs.starfarer.api.campaign.SpecialItemSpecAPI;
+import com.fs.starfarer.api.combat.ShipHullSpecAPI;
 import com.fs.starfarer.api.fleet.FleetMemberAPI;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.impl.campaign.ids.Items;
+import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.impl.campaign.submarkets.BaseSubmarketPlugin;
 import com.fs.starfarer.api.loading.FighterWingSpecAPI;
+import com.fs.starfarer.api.loading.WeaponSpecAPI;
 import com.fs.starfarer.api.util.Highlights;
 import com.fs.starfarer.api.util.Misc;
 import com.fs.starfarer.api.util.WeightedRandomPicker;
@@ -73,26 +77,16 @@ public class TechMarket extends BaseSubmarketPlugin {
         if (sinceLastCargoUpdate < 30)
             return;
         sinceLastCargoUpdate = 0f;
-
-        CargoAPI cargo = getCargo();
-
-        // clear inventory
-        for (CargoStackAPI s : cargo.getStacksCopy()) {
-            float qty = s.getSize();
-            cargo.removeItems(s.getType(), s.getData(), qty);
-        }
-        cargo.removeEmptyStacks();
-        // addShips();
-        // addWings();
-        // addWeapons();
-        addSpecialTech();
-        cargo.sort();
+        updateCargo();
     }
 
     // Force update the Marketplace
     public void updateCargoForce() {
         sinceLastCargoUpdate = 0f;
+        updateCargo();
+    }
 
+    public void updateCargo() {
         CargoAPI cargo = getCargo();
 
         // clear inventory
@@ -101,11 +95,9 @@ public class TechMarket extends BaseSubmarketPlugin {
             cargo.removeItems(s.getType(), s.getData(), qty);
         }
         cargo.removeEmptyStacks();
-        // addShips();
-        // addWings();
-        // addWeapons();
         addSpecialTech();
         addAICores();
+        addBlueprints();
         cargo.sort();
     }
 
@@ -114,48 +106,63 @@ public class TechMarket extends BaseSubmarketPlugin {
     // For now, just getting basic items to work!
     protected void addSpecialTech() {
         CargoAPI cargo = getCargo();
-        HashMap<String, Boolean> specialItemsList = new HashMap<String, Boolean>();
-        Random random = new Random();
+        HashMap<String, Boolean> vanillaSpecialItemsList = new HashMap<String, Boolean>();
+        HashMap<String, Boolean> DIYPlanetsSpecialItemsList = new HashMap<String, Boolean>();
 
         // Get all the items to add via tags or hardcoded ids
         for (SpecialItemSpecAPI spec : Global.getSettings().getAllSpecialItemSpecs()) {
-            final String[] TagsToAdd = { "nanoforge", "hist3t" };
+            // Includes all the vanilla special items
+            final String[] vanillaItemIDs = { "pather4", "hist3t" };
 
             // Hardcoded for DIY planets atm, as they dont have any tags
-            final String[] ItemIDsToAdd = { "atmo_mineralizer", "atmo_sublimator", "solar_reflector",
+            final String[] DIYPlanetsItemIDs = { "atmo_mineralizer", "atmo_sublimator", "solar_reflector",
                     "tectonic_attenuator", "weather_core", "climate_sculptor", "gravity_oscillator", "rad_remover" };
 
             for (String itemTag : spec.getTags()) {
-                if (Arrays.asList(TagsToAdd).contains(itemTag) || Arrays.asList(ItemIDsToAdd).contains(spec.getId())) {
-                    specialItemsList.put(spec.getId(), true);
+                // These should never "clash" but use continue just to be sure
+                if (Arrays.asList(vanillaItemIDs).contains(itemTag)) {
+                    vanillaSpecialItemsList.put(spec.getId(), true);
+                    continue;
+                }
+                if (Arrays.asList(DIYPlanetsItemIDs).contains(itemTag)) {
+                    DIYPlanetsSpecialItemsList.put(spec.getId(), true);
+                    continue;
                 }
             }
-
-            if (Arrays.asList(ItemIDsToAdd).contains(spec.getId())) {
-                specialItemsList.put(spec.getId(), true);
-            }
-
         }
 
         // Now Pick based on the techMarketLevel
         // Take random 20% of total items per market level
+        // Use 20% of each list for more even distribution
         // Quantity is random number from 1 to market level
         // Make our random picker list
-        WeightedRandomPicker<String> randomPicker = new WeightedRandomPicker<>(itemGenRandom);
-        for (HashMap.Entry<String, Boolean> item : specialItemsList.entrySet()) {
-            randomPicker.add(item.getKey());
+        WeightedRandomPicker<String> randomVanillaPicker = new WeightedRandomPicker<>(itemGenRandom);
+        WeightedRandomPicker<String> randomDIYPicker = new WeightedRandomPicker<>(itemGenRandom);
+        for (HashMap.Entry<String, Boolean> item : vanillaSpecialItemsList.entrySet()) {
+            randomVanillaPicker.add(item.getKey());
+        }
+        for (HashMap.Entry<String, Boolean> item : DIYPlanetsSpecialItemsList.entrySet()) {
+            randomDIYPicker.add(item.getKey());
         }
 
-        // Then add the items
-        for (int i = 0; i < (randomPicker.getTotal() / 5) * techMarketLevel; i++) {
-            if (randomPicker.isEmpty())
-                break;
+        float totalItems = randomVanillaPicker.getTotal() + randomDIYPicker.getTotal();
 
-            String itemID = randomPicker.pickAndRemove();
-            // Guaranteed to get at least 1, more based on tech level
-            int quantity = random.nextInt(techMarketLevel) + 1;
-            log.info("Trying to add " + itemID + " with quantity " + quantity);
-            cargo.addSpecial(new SpecialItemData(itemID, null), quantity);
+        // Then add the items
+        for (int i = 0; i < (totalItems / 5) * techMarketLevel; i++) {
+            if (!randomVanillaPicker.isEmpty()) {
+                String itemID = randomVanillaPicker.pickAndRemove();
+                // Guaranteed to get at least 1, more based on tech level
+                int quantity = itemGenRandom.nextInt(techMarketLevel) + 1;
+                log.info("Trying to add " + itemID + " with quantity " + quantity);
+                cargo.addSpecial(new SpecialItemData(itemID, null), quantity);
+            }
+            if (!randomDIYPicker.isEmpty()) {
+                String itemID = randomDIYPicker.pickAndRemove();
+                // Guaranteed to get at least 1, more based on tech level
+                int quantity = itemGenRandom.nextInt(techMarketLevel) + 1;
+                log.info("Trying to add " + itemID + " with quantity " + quantity);
+                cargo.addSpecial(new SpecialItemData(itemID, null), quantity);
+            }
         }
     }
 
@@ -184,25 +191,98 @@ public class TechMarket extends BaseSubmarketPlugin {
 
     }
 
-    protected void addWeapons() {
-        CargoAPI cargo = getCargo();
-        List<String> weaponIds = Global.getSector().getAllWeaponIds();
+    protected void addBlueprints() {
+        addWeaponBlueprints();
+        addWingsBlueprints();
+        addShipsBlueprints();
+    }
 
-        for (String weaponId : weaponIds) {
-            cargo.addWeapons(weaponId, 10);
+    protected void addWeaponBlueprints() {
+        CargoAPI cargo = getCargo();
+        List<WeaponSpecAPI> weaponSpecs = Global.getSettings().getAllWeaponSpecs();
+        WeightedRandomPicker<String> randomWeaponPicker = new WeightedRandomPicker<>(itemGenRandom);
+
+        for (WeaponSpecAPI spec : weaponSpecs) {
+            // Check if this is not a blueprint that should drop etc
+            if (!spec.hasTag("rare_bp") || spec.hasTag(Tags.NO_DROP) || spec.hasTag(Tags.NO_BP_DROP)) {
+                continue;
+            }
+            // Check if player already knows this weapon?
+            // if (Global.getSector().getPlayerFaction().knowsWeapon(spec.getWeaponId())) {
+            // continue;
+            // }
+            // Add the data to our picker
+            randomWeaponPicker.add(spec.getWeaponId());
+        }
+
+        // Now make our Blueprints
+        for (int i = 0; i < (randomWeaponPicker.getItems().size() / 5) * techMarketLevel; i++) {
+            if (!randomWeaponPicker.isEmpty()) {
+                String itemID = randomWeaponPicker.pickAndRemove();
+                // Only need 1 of each Blueprint
+                log.info("Trying to add Weapon blueprint for " + itemID);
+                cargo.addSpecial(new SpecialItemData(Items.WEAPON_BP, itemID), 1);
+            }
         }
     }
 
-    protected void addWings() {
+    protected void addWingsBlueprints() {
         CargoAPI cargo = getCargo();
-        for (FighterWingSpecAPI spec : Global.getSettings().getAllFighterWingSpecs()) {
-            cargo.addItems(CargoAPI.CargoItemType.FIGHTER_CHIP, spec.getId(), 5);
+        List<FighterWingSpecAPI> fighterSpecs = Global.getSettings().getAllFighterWingSpecs();
+        WeightedRandomPicker<String> randomFighterPicker = new WeightedRandomPicker<>(itemGenRandom);
+
+        for (FighterWingSpecAPI spec : fighterSpecs) {
+            // Check if this is not a blueprint that should drop etc
+            if (!spec.hasTag("rare_bp") || spec.hasTag(Tags.NO_DROP) || spec.hasTag(Tags.NO_BP_DROP)) {
+                continue;
+            }
+            // Check if player already knows this weapon?
+            // if (Global.getSector().getPlayerFaction().knowsWeapon(spec.getWeaponId())) {
+            // continue;
+            // }
+            // Add the data to our picker
+            randomFighterPicker.add(spec.getId());
+        }
+
+        // Now make our Blueprints
+        for (int i = 0; i < (randomFighterPicker.getItems().size() / 5) * techMarketLevel; i++) {
+            if (!randomFighterPicker.isEmpty()) {
+                String itemID = randomFighterPicker.pickAndRemove();
+                // Only need 1 of each Blueprint
+                log.info("Trying to add Fighter blueprint for " + itemID);
+                cargo.addSpecial(new SpecialItemData(Items.FIGHTER_BP, itemID), 1);
+            }
         }
     }
 
-    protected void addShips() {
-        // CargoAPI cargo = getCargo();
-        // FleetDataAPI data = cargo.getMothballedShips();
+    protected void addShipsBlueprints() {
+        CargoAPI cargo = getCargo();
+        List<ShipHullSpecAPI> hullSpecs = Global.getSettings().getAllShipHullSpecs();
+        WeightedRandomPicker<String> randomHullPicker = new WeightedRandomPicker<>(itemGenRandom);
+
+        for (ShipHullSpecAPI spec : hullSpecs) {
+            // Check if this is not a blueprint that should drop etc
+            if (!spec.hasTag("rare_bp") || spec.hasTag(Tags.NO_DROP) || spec.hasTag(Tags.NO_BP_DROP)) {
+                continue;
+            }
+            // Check if player already knows this weapon?
+            // if (Global.getSector().getPlayerFaction().knowsWeapon(spec.getWeaponId())) {
+            // continue;
+            // }
+            // Add the data to our picker
+            randomHullPicker.add(spec.getHullId());
+        }
+
+        // Now make our Blueprints
+        for (int i = 0; i < (randomHullPicker.getItems().size() / 5) * techMarketLevel; i++) {
+            if (!randomHullPicker.isEmpty()) {
+                String itemID = randomHullPicker.pickAndRemove();
+                // Only need 1 of each Blueprint
+                log.info("Trying to add Hull blueprint for " + itemID);
+                cargo.addSpecial(new SpecialItemData(Items.SHIP_BP, itemID), 1);
+            }
+        }
+
     }
 
     // ==========================================================================
