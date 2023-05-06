@@ -1,12 +1,12 @@
 {
     "masterVersionFile":"https://raw.githubusercontent.com/hamzah-hayat/ChickenTechShop/master/ChickenTechShop.version",
     "modName":"Chicken's Tech Shop",
-    # "modThreadId":8181,
+    "modThreadId":26229,
     "modNexusId":84,
     "modVersion":
     {
         "major":0,
         "minor":1,
-        "patch":2 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
+        "patch":3 # Can be a number, character or string (1, 2, a, b, "-RC2", etc)
     }
 }
