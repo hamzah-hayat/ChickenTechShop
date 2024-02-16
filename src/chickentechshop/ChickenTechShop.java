@@ -23,7 +23,7 @@ public class ChickenTechShop extends BaseModPlugin {
 
     public static Logger log = Global.getLogger(ChickenTechShop.class);
 
-    final static int LEVEL_REQ = 10;
+    final static int LEVEL_REQ = 5;
 
     // Inital setup, create chicken at the correct location
     // Or dont if he already exists

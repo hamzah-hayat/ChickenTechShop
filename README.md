@@ -5,7 +5,7 @@ Meeting him will create a submarket at his location that sells items such as AI 
 
 ## Information
 
-The inital contact will start once the Player is Level 10. An intel message will tell you where to meet Chicken for the introduction scene.
+The inital contact will start once the Player is Level 5. An intel message will tell you where to meet Chicken for the introduction scene.
 This will unlock Chickens Tech Shop, a special submarket which gives you access to AI cores, Special Items and Blueprints.
 The number of items available for sale increases as you do contracts for Chicken. Once you reach certain credit thresholds the Tech market will increase in level, giving more options.
 Chickens missions are based of Vanilla ones (for now) with custom text.

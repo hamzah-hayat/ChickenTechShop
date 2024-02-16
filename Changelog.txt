@@ -1,3 +1,9 @@
+Version 0.1.4
+    Changes:
+        - Update to Starsector 0.97a-RC10
+        - Add some new icons
+        - Change start level requirement to 5.
+
 Version 0.1.1
     Changes:
         - Remember to actually update version number, whoops!
