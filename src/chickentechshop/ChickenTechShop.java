@@ -26,7 +26,7 @@ public class ChickenTechShop extends BaseModPlugin {
     final static int LEVEL_REQ = 5;
 
     // Inital setup, create chicken at the correct location
-    // Or dont if he already exists
+    // Or dont if she already exists
     // Choices are (in order)
     // 1. Prism Starport
     // 2. Nova Maxios
