@@ -86,7 +86,10 @@ public class ChickenTechShop extends BaseModPlugin {
 
     @Override
     public void onGameLoad(boolean newGame) {
-
+        //I'm adding this to fix the bug since chicken doesn't exist at later-game save
+        //Idk if it's the correct fix since this line adds chicken
+        chickenInitialSetup();
+        
         MarketAPI market = Global.getSector().getImportantPeople().getPerson(ChickenQuestUtils.PERSON_CHICKEN)
                 .getMarket();
         final SectorAPI sector = Global.getSector();
