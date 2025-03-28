@@ -19,7 +19,7 @@ public class ChickenQuestUtils {
 		person.setImportance(PersonImportance.HIGH);
 		person.setVoice(Voices.SPACER);
 		person.setFaction(Factions.INDEPENDENT);
-		person.setGender(FullName.Gender.MALE);
+		person.setGender(FullName.Gender.FEMALE);
 		person.setRankId(Ranks.UNKNOWN);
 		person.setPostId(Ranks.POST_CITIZEN);
 		person.getName().setFirst("Chicken");
