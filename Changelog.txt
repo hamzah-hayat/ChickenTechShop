@@ -1,3 +1,10 @@
+Version 0.1.5
+    Changes:
+        - Update to Starsector 0.98a-RC5 - Now with Java 17!
+        - Add some new art for Chicken
+        - Possible mid save crash fix
+        - Chicken is now female (as she was always meant to be)
+
 Version 0.1.4
     Changes:
         - Update to Starsector 0.97a-RC10
